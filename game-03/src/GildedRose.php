@@ -7,6 +7,7 @@ use App\Categories\BackStageCategory;
 use App\Categories\Category;
 use App\Categories\ConjuredCategory;
 use App\Categories\NormalCategory;
+use App\Exceptions\FactoryClassNotFoundException;
 use App\Interfaces\GildedRoseInterface;
 
 class GildedRose implements GildedRoseInterface
@@ -16,6 +17,8 @@ class GildedRose implements GildedRoseInterface
         'Aged Brie' => AgedBrieCategory::class,
         'Backstage passes to a TAFKAL80ETC concert' => BackStageCategory::class,
         'Conjured Mana Cake' => ConjuredCategory::class,
+        // Sulfura doesn't change its attributes, so it works as a parent class with no tick's implementation.
+        'Sulfuras, Hand of Ragnaros' => Category::class,
     ];
 
     /**
@@ -23,13 +26,15 @@ class GildedRose implements GildedRoseInterface
      * @param string $name
      * @param int $quality
      * @param int $sellIn
-     * @return mixed
+     * @return Category
+     * @throws FactoryClassNotFoundException
      */
-    public static function of(string $name, int $quality, int $sellIn)
+    public static function of(string $name, int $quality, int $sellIn): Category
     {
-        // Sulfuras doesn't change any of its attributes so it's worked as an default class (Category).
-        $class = isset(self::$lookup[$name]) ? self::$lookup[$name] : Category::class;
+        if (!isset(self::$lookup[$name])) {
+            throw new FactoryClassNotFoundException;
+        }
 
-        return new $class($quality, $sellIn);
+        return new self::$lookup[$name]($quality, $sellIn);
     }
 }
