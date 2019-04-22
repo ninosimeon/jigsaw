@@ -2,72 +2,34 @@
 
 namespace App;
 
-class GildedRose
+use App\Categories\AgedBrieCategory;
+use App\Categories\BackStageCategory;
+use App\Categories\Category;
+use App\Categories\ConjuredCategory;
+use App\Categories\NormalCategory;
+use App\Interfaces\GildedRoseInterface;
+
+class GildedRose implements GildedRoseInterface
 {
-    public $name;
+    private static $lookup = [
+        'normal' => NormalCategory::class,
+        'Aged Brie' => AgedBrieCategory::class,
+        'Backstage passes to a TAFKAL80ETC concert' => BackStageCategory::class,
+        'Conjured Mana Cake' => ConjuredCategory::class,
+    ];
 
-    public $quality;
-
-    public $sellIn;
-
-    public function __construct($name, $quality, $sellIn)
+    /**
+     * Initiates the class considering the category's name and attributes such as quality and sell in.
+     * @param string $name
+     * @param int $quality
+     * @param int $sellIn
+     * @return mixed
+     */
+    public static function of(string $name, int $quality, int $sellIn)
     {
-        $this->name = $name;
-        $this->quality = $quality;
-        $this->sellIn = $sellIn;
-    }
+        // Sulfuras doesn't change any of its attributes so it's worked as an default class (Category).
+        $class = isset(self::$lookup[$name]) ? self::$lookup[$name] : Category::class;
 
-    public static function of($name, $quality, $sellIn) {
-        return new static($name, $quality, $sellIn);
-    }
-
-    public function tick()
-    {
-        if ($this->name != 'Aged Brie' and $this->name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if ($this->quality > 0) {
-                if ($this->name != 'Sulfuras, Hand of Ragnaros') {
-                    $this->quality = $this->quality - 1;
-                }
-            }
-        } else {
-            if ($this->quality < 50) {
-                $this->quality = $this->quality + 1;
-
-                if ($this->name == 'Backstage passes to a TAFKAL80ETC concert') {
-                    if ($this->sellIn < 11) {
-                        if ($this->quality < 50) {
-                            $this->quality = $this->quality + 1;
-                        }
-                    }
-                    if ($this->sellIn < 6) {
-                        if ($this->quality < 50) {
-                            $this->quality = $this->quality + 1;
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($this->name != 'Sulfuras, Hand of Ragnaros') {
-            $this->sellIn = $this->sellIn - 1;
-        }
-
-        if ($this->sellIn < 0) {
-            if ($this->name != 'Aged Brie') {
-                if ($this->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                    if ($this->quality > 0) {
-                        if ($this->name != 'Sulfuras, Hand of Ragnaros') {
-                            $this->quality = $this->quality - 1;
-                        }
-                    }
-                } else {
-                    $this->quality = $this->quality - $this->quality;
-                }
-            } else {
-                if ($this->quality < 50) {
-                    $this->quality = $this->quality + 1;
-                }
-            }
-        }
+        return new $class($quality, $sellIn);
     }
 }
