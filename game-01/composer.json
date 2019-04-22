@@ -8,6 +8,9 @@
       "email": "ninosimeon@gmail.com"
     }
   ],
+  "require": {
+    "php": "7.1.*"
+  },
   "autoload": {
     "psr-4": {
       "Jigsaw\\FirstGame\\": "src/"
@@ -24,5 +27,11 @@
   },
   "scripts-descriptions": {
     "test": "Run all tests!"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "platform": {
+      "php": "7.1.27"
+    }
   }
 }
