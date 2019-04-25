@@ -1,9 +1,9 @@
 # Juego 02
 
 ## Teoría
-Object Pool Design Pattern. Patrón en el cual nos permite gestionar las solicitudes concurrentes.
+CircuitBreaker
 
-![Object Pool Design Pattern](https://i.stack.imgur.com/ZNRU0.gif)
+![CircuitBreaker Pattern](https://martinfowler.com/bliki/images/circuitBreaker/sketch.png)
 
 Microservices Architecture. Variación de SOA desacoplandolo en pequeños proyectos dentro de los cuales estos son altamente testeables, mantenibles, desacoplados, desplegable de manera independiente, organizado.
 
@@ -17,9 +17,7 @@ Considerando que las peticiones son SÍNCRONAS se tiene que implementar el "Obje
 ```
 REFERENCIAS:
 
-- https://medium.com/@dholnessii/the-thread-pool-pattern-7227eb9ec2b6
+- https://martinfowler.com/bliki/CircuitBreaker.html
 - https://medium.com/containermind/rethinking-service-integrations-with-microservices-architecture-5cbb844f5f51
 - https://microservices.io/
-- https://medium.com/@devlob/object-pool-design-pattern-in-php-to-achieve-better-performance-a5a54455db82
-- https://www.developer.com/design/article.php/626171/Pattern-Summaries-Object-Pool.htm
 ```  
