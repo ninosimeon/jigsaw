@@ -24,12 +24,13 @@ class SubsetSum
      */
     public function getFirstSubset(): array
     {
-        for ($i = 0; $i < count($this->set); $i++) {
-            $addend = $this->sumTarget - $this->set[$i];
+        $setInverted = array_flip($this->set);
+        foreach ($setInverted as $key => $value) {
+            $addend = $this->sumTarget - $key;
 
-            // Find the addend in the set.
-            if (in_array($addend, $this->set)) {
-                return [$this->set[$i], $addend];
+            // If the addend exists then return the subset.
+            if (isset($setInverted[$addend])) {
+                return [$key, $addend];
             }
         }
 
