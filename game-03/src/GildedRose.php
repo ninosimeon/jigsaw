@@ -8,9 +8,8 @@ use App\Categories\Category;
 use App\Categories\ConjuredCategory;
 use App\Categories\NormalCategory;
 use App\Exceptions\FactoryClassNotFoundException;
-use App\Interfaces\GildedRoseInterface;
 
-class GildedRose implements GildedRoseInterface
+class GildedRose
 {
     private static $lookup = [
         'normal' => NormalCategory::class,
